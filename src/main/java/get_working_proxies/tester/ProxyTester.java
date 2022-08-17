@@ -94,7 +94,6 @@ public class ProxyTester {
     FirefoxOptions options = new FirefoxOptions();
     Proxy ffProxy = new Proxy();
     ffProxy.setHttpProxy(proxy.getIpAddress() + ":" + proxy.getPort());
-    ffProxy.setSocksProxy(proxy.getIpAddress() + ":" + proxy.getPort());
     options.setProxy(ffProxy);
 
     WebDriver driver = new FirefoxDriver(options);
