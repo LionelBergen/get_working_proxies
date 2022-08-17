@@ -9,12 +9,19 @@
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
+    id "com.diffplug.spotless" version "6.9.1"
 }
 
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+}
+
+spotless {
+  java {
+    googleJavaFormat()
+  }
 }
 
 apply from: 'dependencies.gradle'
