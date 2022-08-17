@@ -7,4 +7,10 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+    
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.4.0'
+	
+	// This is so we dont have to worry about having the driver.exe files somewhere!
+	implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.2.3'	  
 }
