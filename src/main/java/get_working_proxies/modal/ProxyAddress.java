@@ -4,6 +4,11 @@ public class ProxyAddress {
   private String ipAddress;
   private int port;
 
+  public ProxyAddress(String ipAddress, int port) {
+    this.ipAddress = ipAddress;
+    this.port = port;
+  }
+
   public String getIpAddress() {
     return ipAddress;
   }
