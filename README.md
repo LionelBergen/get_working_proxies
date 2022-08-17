@@ -5,4 +5,5 @@ Webdriver / Selenium takes care of opening a browser with a proxy, while an exte
 
 Requirements
 ------------
-JAVA 8+ (tested with java 18, needed for gradle version)  
+**JAVA 8+** (tested with java 18, needed for gradle version)  
+**MY_IP** - *Optional* Environment Variable containing your IP address, so that the proxies will also test that your IP is hidden and fail otherwise.
