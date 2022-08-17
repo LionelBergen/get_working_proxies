@@ -5,6 +5,7 @@ import get_working_proxies.finder.component.ProxyNovaPage3128;
 import get_working_proxies.finder.component.ProxyNovaPage80;
 import get_working_proxies.finder.component.ProxyNovaPage8080;
 import get_working_proxies.modal.ProxyAddress;
+import get_working_proxies.tester.ProxyTester;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,7 +29,9 @@ public class Main {
 
     driver.close();
 
-    System.out.println("Finished program");
+    System.out.println("Going to test proxies next...");
+
+    ProxyTester.testAListOfProxies(listOfProxies, 10, null);
   }
 
   public static List<ProxyAddress> getListOfProxies(WebDriver driver) throws Exception {
