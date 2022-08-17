@@ -14,6 +14,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class Main {
+  private static final String ipAddrEnvironmentVariable = "MY_IP";
+
   public static void main(String[] args) throws Exception {
     System.out.println("Starting program");
 
@@ -31,7 +33,7 @@ public class Main {
 
     System.out.println("Going to test proxies next...");
 
-    ProxyTester.testAListOfProxies(listOfProxies, 10, null);
+    ProxyTester.testAListOfProxies(listOfProxies, 10, ipAddrEnvironmentVariable);
   }
 
   public static List<ProxyAddress> getListOfProxies(WebDriver driver) throws Exception {
