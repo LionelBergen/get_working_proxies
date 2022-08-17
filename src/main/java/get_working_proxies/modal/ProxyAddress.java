@@ -1,4 +1,4 @@
-package get_working_proxies.model;
+package get_working_proxies.modal;
 
 public class ProxyAddress {
 	private String ipAddress;
