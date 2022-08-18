@@ -1,9 +1,7 @@
 package get_working_proxies;
 
+import get_working_proxies.finder.component.FreeProxyLists;
 import get_working_proxies.finder.component.ProxyFinderWebPage;
-import get_working_proxies.finder.component.ProxyNovaPage3128;
-import get_working_proxies.finder.component.ProxyNovaPage80;
-import get_working_proxies.finder.component.ProxyNovaPage8080;
 import get_working_proxies.modal.ProxyAddress;
 import get_working_proxies.tester.ProxyTester;
 import get_working_proxies.tester.modal.ProxyConnectionAttemptHandler;
@@ -68,9 +66,11 @@ public class Main {
 
     List<Thread> threads = new ArrayList<Thread>();
 
-    listOfProxyPages.add(new ProxyNovaPage80());
-    listOfProxyPages.add(new ProxyNovaPage8080());
-    listOfProxyPages.add(new ProxyNovaPage3128());
+    // listOfProxyPages.add(new ProxyNovaPage80());
+    // listOfProxyPages.add(new ProxyNovaPage8080());
+    // listOfProxyPages.add(new ProxyNovaPage3128());
+    // listOfProxyPages.add(new FreeProxyList());
+    listOfProxyPages.add(new FreeProxyLists());
 
     synchronized (uniqueProxiesFound) {
       for (ProxyFinderWebPage page : listOfProxyPages) {
