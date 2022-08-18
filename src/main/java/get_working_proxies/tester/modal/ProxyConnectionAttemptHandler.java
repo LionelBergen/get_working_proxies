@@ -2,6 +2,7 @@ package get_working_proxies.tester.modal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProxyConnectionAttemptHandler {
   private List<ProxySuccessfulConnectionInfo> workingProxiesList;
@@ -26,5 +27,11 @@ public class ProxyConnectionAttemptHandler {
 
   public List<ProxyFailedConnectionInfo> getFailedProxiesList() {
     return failedProxiesList;
+  }
+
+  public List<ProxySuccessfulConnectionInfo> getSortedWorkingProxiesBySpeed() {
+    return workingProxiesList.stream()
+        .sorted((a, b) -> (int) (a.getTimeToConnect() - b.getTimeToConnect()))
+        .collect(Collectors.toList());
   }
 }

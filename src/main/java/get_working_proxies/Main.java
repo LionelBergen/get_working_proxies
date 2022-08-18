@@ -42,7 +42,21 @@ public class Main {
         ProxyTester.testAListOfProxies(
             listOfProxies.stream().collect(Collectors.toList()), 10, actualIpAddress);
 
-    for (ProxySuccessfulConnectionInfo workingProxy : results.getWorkingProxiesList()) {
+    List<ProxySuccessfulConnectionInfo> workingProxiesSorted =
+        results.getSortedWorkingProxiesBySpeed();
+
+    System.out.println(
+        "Fasted proxy: "
+            + workingProxiesSorted.get(0).getProxyAddress()
+            + " with a speed of: "
+            + workingProxiesSorted.get(0).getTimeToConnect());
+    System.out.println(
+        "Slowest proxy: "
+            + workingProxiesSorted.get(workingProxiesSorted.size() - 1).getProxyAddress()
+            + " with a speed of: "
+            + workingProxiesSorted.get(workingProxiesSorted.size() - 1).getTimeToConnect());
+
+    for (ProxySuccessfulConnectionInfo workingProxy : workingProxiesSorted) {
       System.out.println(workingProxy.getProxyAddress().toString());
     }
   }
@@ -58,13 +72,15 @@ public class Main {
     listOfProxyPages.add(new ProxyNovaPage8080());
     listOfProxyPages.add(new ProxyNovaPage3128());
 
-    for (ProxyFinderWebPage page : listOfProxyPages) {
-      threads.add(
-          new Thread() {
-            public void run() {
-              uniqueProxiesFound.addAll(page.getProxyAddresses(driver));
-            }
-          });
+    synchronized (uniqueProxiesFound) {
+      for (ProxyFinderWebPage page : listOfProxyPages) {
+        threads.add(
+            new Thread() {
+              public void run() {
+                uniqueProxiesFound.addAll(page.getProxyAddresses(driver));
+              }
+            });
+      }
     }
 
     for (Thread t : threads) {

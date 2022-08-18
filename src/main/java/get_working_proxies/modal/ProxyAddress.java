@@ -29,4 +29,18 @@ public class ProxyAddress {
   public String toString() {
     return this.ipAddress + ":" + this.port;
   }
+
+  @Override
+  public boolean equals(Object proxyAddress) {
+    if (proxyAddress == null || proxyAddress.getClass() != this.getClass()) {
+      return false;
+    }
+
+    return this.ipAddress.equals(((ProxyAddress) proxyAddress).getIpAddress());
+  }
+
+  @Override
+  public int hashCode() {
+    return ipAddress.hashCode();
+  }
 }
