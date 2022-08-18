@@ -18,6 +18,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class ProxyTester {
+  private static final boolean closeBrowsersAfterTest = true;
+
+  // TODO: does this work?
   private static final String ID_FOR_JAVASCRIPT_DISABLED = "noscriptmsg";
 
   private static final String PROXY_GENERAL_CONNECTION_ERROR = "Could not connect to proxy";
@@ -84,16 +87,15 @@ public class ProxyTester {
   public static void testAProxy(
       ProxyAddress proxy, ProxyConnectionAttemptHandler handler, String actualIpAddress)
       throws IOException {
-    boolean closeBrowserAfterWork = true;
     Long startTime = System.currentTimeMillis();
     Long endTime = (Long) null;
     boolean javaSriptEnabled = false;
-    closeBrowserAfterWork = false;
     String errorMessage = null;
 
     FirefoxOptions options = new FirefoxOptions();
     Proxy ffProxy = new Proxy();
     ffProxy.setHttpProxy(proxy.getIpAddress() + ":" + proxy.getPort());
+    ffProxy.setSslProxy(proxy.getIpAddress() + ":" + proxy.getPort());
     options.setProxy(ffProxy);
 
     WebDriver driver = new FirefoxDriver(options);
@@ -106,7 +108,7 @@ public class ProxyTester {
       errorMessage = PROXY_GENERAL_CONNECTION_ERROR;
     }
 
-    if (errorMessage != null) {
+    if (errorMessage == null) {
       // The URL may be different if we're on a proxy which doesn't allow directing anywhere.
       if (!driver.getCurrentUrl().contains(ProxyTestingPage.URL_CONTAINING_CLIENT_INFO)) {
         errorMessage = PROXY_ONLY_ALLOWS_SPECIFIC_URLS;
@@ -146,7 +148,7 @@ public class ProxyTester {
       handler.addFailedProxy(new ProxyFailedConnectionInfo(proxy, errorMessage));
     }
 
-    if (closeBrowserAfterWork) {
+    if (closeBrowsersAfterTest) {
       driver.close();
     }
   }

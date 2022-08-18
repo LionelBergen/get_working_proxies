@@ -6,10 +6,13 @@ import get_working_proxies.finder.component.ProxyNovaPage80;
 import get_working_proxies.finder.component.ProxyNovaPage8080;
 import get_working_proxies.modal.ProxyAddress;
 import get_working_proxies.tester.ProxyTester;
+import get_working_proxies.tester.modal.ProxyConnectionAttemptHandler;
+import get_working_proxies.tester.modal.ProxySuccessfulConnectionInfo;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -19,9 +22,11 @@ public class Main {
   public static void main(String[] args) throws Exception {
     System.out.println("Starting program");
 
+    String actualIpAddress = System.getenv(ipAddrEnvironmentVariable);
+    System.out.println("ip address to hide (optional): " + actualIpAddress);
+
     WebDriverManager.firefoxdriver().setup();
     WebDriver driver = new FirefoxDriver();
-    driver.get("http://www.google.com");
 
     List<ProxyAddress> listOfProxies = getListOfProxies(driver);
 
@@ -33,7 +38,13 @@ public class Main {
 
     System.out.println("Going to test proxies next...");
 
-    ProxyTester.testAListOfProxies(listOfProxies, 10, ipAddrEnvironmentVariable);
+    ProxyConnectionAttemptHandler results =
+        ProxyTester.testAListOfProxies(
+            listOfProxies.stream().collect(Collectors.toList()), 10, actualIpAddress);
+
+    for (ProxySuccessfulConnectionInfo workingProxy : results.getWorkingProxiesList()) {
+      System.out.println(workingProxy.getProxyAddress().toString());
+    }
   }
 
   public static List<ProxyAddress> getListOfProxies(WebDriver driver) throws Exception {
