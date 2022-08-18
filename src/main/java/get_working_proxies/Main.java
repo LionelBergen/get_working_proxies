@@ -77,7 +77,8 @@ public class Main {
         threads.add(
             new Thread() {
               public void run() {
-                uniqueProxiesFound.addAll(page.getProxyAddresses(driver));
+                List<ProxyAddress> results = page.getProxyAddresses(driver);
+                uniqueProxiesFound.addAll(results);
               }
             });
       }
